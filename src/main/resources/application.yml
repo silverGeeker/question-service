@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: question-service
+  datasource:
+    driver - class- name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5432/question_db
+    username: postgres
+    password: admin
