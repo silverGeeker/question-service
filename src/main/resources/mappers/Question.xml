@@ -5,7 +5,33 @@
 <mapper namespace="com.micro.questionservice.mappers.QuestionMapper">
 
     <select id="getAllQuestions" resultType="com.micro.questionservice.model.Question">
-   SELECT id, question_title, option1, option2, option3, option4, right_answer, difficulty_level, category FROM question;
+   SELECT id, question_title, option1, option2, option3, option4, right_answer, difficulty_level, category
+   FROM question
     </select>
+
+    <select id="getQuestionsByCategory" resultType="com.micro.questionservice.model.Question" parameterType="com.micro.questionservice.model.Question">
+        SELECT id, question_title, option1, option2, option3, option4, right_answer, difficulty_level, category
+        FROM question WHERE category = #{category}
+    </select>
+
+    <insert id="addQuestion" parameterType="com.micro.questionservice.model.Question"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        question(question_title, option1, option2, option3, option4, right_answer, difficulty_level, category)
+        VALUES (#{questionTitle}, #{option1}, #{option2}, #{option3}, #{option4}, #{rightAnswer}, #{difficultyLevel}, #{category})
+    </insert>
+
+    <select id="getRandomQuestionIdListByCategory" resultType="Integer" parameterType="String">
+        SELECT id FROM question WHERE category = #{category} ORDER BY RANDOM() LIMIT 5;
+    </select>
+
+    <insert id="insertQuestionIdForQuiz" parameterType="com.micro.questionservice.model.Question"
+            useGeneratedKeys="true" keyColumn="quiz_id">
+        INSERT INTO
+            question_for_quiz (question_id)
+        VALUES <foreach collection="questionIdList" item="id" separator=",">
+        (#{id})
+    </foreach>
+    </insert>
 
 </mapper>

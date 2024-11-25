@@ -15,9 +15,27 @@ public class QuestionDao {
     private SqlSession sqlSession;
 
     public List<Question> getAllQuestions() {
-        System.out.println("insideDao");
         QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
         return mapper.getAllQuestions();
+    }
 
+    public List<Question> getQuestionsByCategory(Question questionObj){
+        QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
+        return mapper.getQuestionsByCategory(questionObj);
+    }
+
+    public boolean addQuestion(Question questionObj){
+        QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
+        return mapper.addQuestion(questionObj);
+    }
+
+    public List<Integer> getRandomQuestionIdListByCategory(String category){
+        QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
+        return mapper.getRandomQuestionIdListByCategory(category);
+    }
+
+    public boolean insertQuestionIdForQuiz(List<Integer> questionIdList){
+        QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
+        return mapper.insertQuestionIdForQuiz(questionIdList);
     }
 }

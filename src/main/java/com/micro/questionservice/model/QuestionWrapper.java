@@ -1,6 +1,6 @@
 package com.micro.questionservice.model;
 
-public class Question {
+public class QuestionWrapper {
 
     private int id ;
     private String questionTitle;
@@ -8,9 +8,6 @@ public class Question {
     private String option2;
     private String option3;
     private String option4;
-    private String rightAnswer;
-    private String difficultyLevel;
-    private String category;
 
     public int getId() {
         return id;
@@ -60,39 +57,12 @@ public class Question {
         this.option4 = option4;
     }
 
-    public String getRightAnswer() {
-        return rightAnswer;
-    }
-
-    public void setRightAnswer(String rightAnswer) {
-        this.rightAnswer = rightAnswer;
-    }
-
-    public String getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
-    public void setDifficultyLevel(String difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Question(int id, String questionTitle, String option1, String option2, String option3, String option4, String rightAnswer, String difficultyLevel, String category) {
+    public QuestionWrapper(int id, String questionTitle, String option2, String option1, String option3, String option4) {
         this.id = id;
         this.questionTitle = questionTitle;
-        this.option1 = option1;
         this.option2 = option2;
+        this.option1 = option1;
         this.option3 = option3;
         this.option4 = option4;
-        this.rightAnswer = rightAnswer;
-        this.difficultyLevel = difficultyLevel;
-        this.category = category;
     }
 }
