@@ -15,8 +15,10 @@ public interface QuestionMapper {
 
     public boolean addQuestion(Question questionObj);
 
-    public List<Integer> getRandomQuestionIdListByCategory(String category);
+    public List<QuestionWrapper> getRandomQuestionListByCategory(String category);
 
     public boolean insertQuestionIdForQuiz(List<Integer> questionIdList);
+
+    public String getCorrectAnswerByQuestionID(Integer id);
 
 }

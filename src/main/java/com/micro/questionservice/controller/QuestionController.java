@@ -1,6 +1,8 @@
 package com.micro.questionservice.controller;
 
 import com.micro.questionservice.model.Question;
+import com.micro.questionservice.model.QuestionWrapper;
+import com.micro.questionservice.model.Response;
 import com.micro.questionservice.service.QuestionService;
 import com.micro.questionservice.service.impl.QuestionServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,12 +54,24 @@ public class QuestionController {
         return resultMap;
     }
 
-    @PostMapping ("generateQuestionIdList")
-    public Map<String, Object> getRandomQuestionIdListByCategory(@RequestBody Question questionObj, HttpServletRequest req) {
+    @GetMapping ("generateQuestionList")
+    public Map<String, Object> getRandomQuestionListByCategory(@RequestBody Question questionObj, HttpServletRequest req) {
         Map<String, Object> resultMap = new HashMap<>();
         try{
-            resultMap=questionService.getRandomQuestionIdListByCategory(questionObj);
+            resultMap=questionService.getRandomQuestionListByCategory(questionObj);
         }catch(Exception e){
+            LOGGER.error("Exception"+e.getCause());
+
+        }
+        return resultMap;
+    }
+
+    @GetMapping ("getScore")
+    public Map<String, Object> getScore(@RequestBody List<Response> responseList, HttpServletRequest req) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            resultMap=questionService.getScore(responseList);
+        }catch (Exception e){
             LOGGER.error("Exception"+e.getCause());
             e.printStackTrace();
         }

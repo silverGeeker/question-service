@@ -3,6 +3,7 @@ package com.micro.questionservice.service.impl;
 import com.micro.questionservice.dao.QuestionDao;
 import com.micro.questionservice.model.Question;
 import com.micro.questionservice.model.QuestionWrapper;
+import com.micro.questionservice.model.Response;
 import com.micro.questionservice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,24 +67,52 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Map<String, Object> getRandomQuestionIdListByCategory(Question questionObj){
+    public Map<String, Object> getRandomQuestionListByCategory(Question questionObj){
         Map<String, Object> resultMap = new HashMap<>();
         List<String> errorList = new ArrayList<>();
-        List<Integer> questionIdList = new ArrayList<>();
+        List<QuestionWrapper> questionList = new ArrayList<>();
 
-        questionIdList = questionDao.getRandomQuestionIdListByCategory(questionObj.getCategory());
-        boolean isInserted = false;
-        isInserted = questionDao.insertQuestionIdForQuiz(questionIdList);
+        questionList = questionDao.getRandomQuestionListByCategory(questionObj.getCategory());
 
-        if (isInserted && errorList.isEmpty()) {
+        if(questionList.isEmpty()){
+            errorList.add("Category Not Found");
+        }
+        if (errorList.isEmpty()) {
             resultMap.put("status", "success");
+            resultMap.put("Questions", questionList);
             resultMap.put("errorList", errorList);
             resultMap.put("message", "QuestionID Added");
         }
         else {
             resultMap.put("status", "success");
             resultMap.put("errorList", errorList);
-            resultMap.put("message", "QuestionID Not Added");
+            resultMap.put("message", "Questions Not Added");
+        }
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getScore(List<Response> responseList){
+        Map<String, Object> resultMap = new HashMap<>();
+        List<String> errorList = new ArrayList<>();
+
+        int score = 0;
+        for(Response response : responseList){
+            String correctAnswer;
+            correctAnswer = questionDao.getCorrectAnswerByQuestionID(response.getId());
+            if(correctAnswer.equalsIgnoreCase(response.getResponse()))
+                score++;
+        }
+        if (errorList.isEmpty()) {
+            resultMap.put("status", "success");
+            resultMap.put("score", score);
+            resultMap.put("errorList", errorList);
+            resultMap.put("message", "Score generated");
+        }
+        else {
+            resultMap.put("status", "success");
+            resultMap.put("errorList", errorList);
+            resultMap.put("message", "Score Not generated");
         }
         return resultMap;
     }

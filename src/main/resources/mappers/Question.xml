@@ -21,8 +21,8 @@
         VALUES (#{questionTitle}, #{option1}, #{option2}, #{option3}, #{option4}, #{rightAnswer}, #{difficultyLevel}, #{category})
     </insert>
 
-    <select id="getRandomQuestionIdListByCategory" resultType="Integer" parameterType="String">
-        SELECT id FROM question WHERE category = #{category} ORDER BY RANDOM() LIMIT 5;
+    <select id="getRandomQuestionListByCategory" resultType="com.micro.questionservice.model.QuestionWrapper" parameterType="String">
+        SELECT id, question_title, option1, option2, option3, option4 FROM question WHERE category = #{category} ORDER BY RANDOM() LIMIT 5;
     </select>
 
     <insert id="insertQuestionIdForQuiz" parameterType="com.micro.questionservice.model.Question"
@@ -33,5 +33,9 @@
         (#{id})
     </foreach>
     </insert>
+
+    <select id="getCorrectAnswerByQuestionID" resultType="String" parameterType="Integer">
+        SELECT right_answer FROM question WHERE id = #{id}
+    </select>
 
 </mapper>

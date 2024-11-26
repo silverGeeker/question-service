@@ -1,6 +1,7 @@
 package com.micro.questionservice.service;
 
 import com.micro.questionservice.model.Question;
+import com.micro.questionservice.model.Response;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ public interface QuestionService {
 
     public Map<String, Object> addQuestion(Question questionObj);
 
-    public Map<String, Object> getRandomQuestionIdListByCategory(Question questionObj);
+    public Map<String, Object> getRandomQuestionListByCategory(Question questionObj);
+
+    public Map<String, Object> getScore(List<Response> responseList);
 
 }

@@ -2,6 +2,7 @@ package com.micro.questionservice.dao;
 
 import com.micro.questionservice.mappers.QuestionMapper;
 import com.micro.questionservice.model.Question;
+import com.micro.questionservice.model.QuestionWrapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,13 +30,19 @@ public class QuestionDao {
         return mapper.addQuestion(questionObj);
     }
 
-    public List<Integer> getRandomQuestionIdListByCategory(String category){
+    public List<QuestionWrapper> getRandomQuestionListByCategory(String category){
         QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
-        return mapper.getRandomQuestionIdListByCategory(category);
+        return mapper.getRandomQuestionListByCategory(category);
     }
 
     public boolean insertQuestionIdForQuiz(List<Integer> questionIdList){
         QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
         return mapper.insertQuestionIdForQuiz(questionIdList);
     }
+
+    public String getCorrectAnswerByQuestionID(Integer id){
+        QuestionMapper mapper = sqlSession.getMapper(QuestionMapper.class);
+        return mapper.getCorrectAnswerByQuestionID(id);
+    }
+
 }
